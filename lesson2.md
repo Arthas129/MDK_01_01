@@ -44,10 +44,6 @@
 
 text
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyApp", "MyApp\MyApp.vcxproj", "{GUID}"
-EndProject
-
 
 **2. Файл проекта (.vcxproj)**
 Назначение: Основной файл проекта C++. Содержит все настройки компиляции, компоновки, списки исходных файлов, заголовков, ресурсов, параметры препроцессора, оптимизации и т.д. Используется системой MSBuild для сборки проекта.
