@@ -47,6 +47,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyApp", "MyApp\MyApp.vcxproj", "{GUID}"
 EndProject
+
+
 **2. Файл проекта (.vcxproj)**
 Назначение: Основной файл проекта C++. Содержит все настройки компиляции, компоновки, списки исходных файлов, заголовков, ресурсов, параметры препроцессора, оптимизации и т.д. Используется системой MSBuild для сборки проекта.
 
@@ -55,7 +57,8 @@ EndProject
 Когда используется: Visual Studio читает .vcxproj для отображения дерева проекта, для IntelliSense, для сборки. При изменении настроек проекта через диалоговые окна Visual Studio изменения сохраняются в этом файле.
 
 Пример фрагмента:
----
+
+
 xml
 <Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
@@ -75,7 +78,7 @@ xml
     <ClInclude Include="myclass.h" />
   </ItemGroup>
 </Project>
----
+
 
 **3. Файл фильтров (.vcxproj.filters)**
 Назначение: Используется только средой Visual Studio для организации файлов проекта в виртуальные папки (фильтры) в обозревателе решений. Не влияет на сборку.
@@ -86,7 +89,7 @@ xml
 
 Пример:
 
----
+
 xml
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
@@ -112,7 +115,7 @@ xml
     </ClInclude>
   </ItemGroup>
 </Project>
----
+
 
 **4. Файл пользовательских настроек (.vcxproj.user)**
 Назначение: Хранит персональные настройки конкретного пользователя для данного проекта, например, параметры отладки (командные аргументы, рабочая папка), выбранную конфигурацию для запуска, настройки IntelliSense, расположение точек останова и т.п.
@@ -122,7 +125,7 @@ xml
 Когда используется: Visual Studio автоматически создаёт и изменяет этот файл при работе пользователя. При передаче проекта другому разработчику этот файл не обязателен.
 
 Пример:
----
+
 xml
 <Project ToolsVersion="Current" xmlns="...">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -131,7 +134,7 @@ xml
     <LocalDebuggerCommandArguments>--verbose</LocalDebuggerCommandArguments>
   </PropertyGroup>
 </Project>
----
+
 
 **5. Исходные файлы C++ (.cpp)**
 Назначение: Содержат реализацию функций, методов классов, глобальных переменных и т.д. Это основные файлы, которые компилируются в объектные файлы (.obj).
@@ -141,7 +144,7 @@ xml
 Когда используется: Компилятор обрабатывает каждый .cpp файл отдельно, создавая объектный файл. Затем компоновщик объединяет объектные файлы в исполняемый файл.
 
 Пример (main.cpp):
----
+
 cpp
 #include <iostream>
 #include "myclass.h"
@@ -151,7 +154,7 @@ int main() {
     obj.printMessage();
     return 0;
 }
----
+
 
 
 **6. Заголовочные файлы (.h, .hpp)**
@@ -162,7 +165,7 @@ int main() {
 Когда используется: Препроцессор вставляет содержимое заголовочного файла в .cpp перед компиляцией. Позволяет избежать дублирования кода и обеспечивает модульность.
 
 Пример (myclass.h):
----
+
 cpp
 #pragma once
 #include <string>
@@ -173,7 +176,7 @@ public:
 private:
     std::string message = "Hello from MyClass!";
 };
----
+
 
 
 **7. Предварительно откомпилированные заголовки (pch.h, pch.cpp)**
@@ -203,7 +206,7 @@ resource.h — заголовочный файл с идентификатора
 Когда используется: Ресурсный компилятор (rc.exe) преобразует .rc в двоичный файл .res, который затем компонуется в исполняемый файл. Позволяет хранить в приложении иконки, версии, локализованные строки.
 
 Пример фрагмента .rc:
----
+
 text
 IDI_MYAPP ICON "myapp.ico"
 IDD_ABOUTBOX DIALOGEX 0, 0, 200, 100
@@ -212,7 +215,7 @@ CAPTION "About MyApp"
 BEGIN
     DEFPUSHBUTTON "OK", IDOK, 75, 80, 50, 14
 END
----
+
 
 **9. Файл манифеста приложения (app.manifest)**
 Назначение: XML-файл, определяющий параметры выполнения приложения: требуемые права администратора, совместимость с версиями Windows, зависимости от библиотек (например, Common Controls 6), DPI-осведомлённость и т.д.
@@ -223,7 +226,7 @@ END
 
 Пример:
 
----
+
 xml
 <?xml version="1.0" encoding="utf-8"?>
 <assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1">
@@ -240,7 +243,7 @@ xml
     </dependentAssembly>
   </dependency>
 </assembly>
----
+
         
 10. Файл AssemblyInfo.cpp (для проектов .NET/CLR или Windows)
 Назначение: В проектах C++/CLI или некоторых типах проектов Windows содержит метаданные сборки (версия, имя, культура, атрибуты).
