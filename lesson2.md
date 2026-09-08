@@ -56,29 +56,6 @@ EndProject
 
 Когда используется: Visual Studio читает .vcxproj для отображения дерева проекта, для IntelliSense, для сборки. При изменении настроек проекта через диалоговые окна Visual Studio изменения сохраняются в этом файле.
 
-Пример фрагмента:
-
-
-xml
-<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-  </ItemGroup>
-  <PropertyGroup Label="Globals">
-    <ProjectGuid>{...}</ProjectGuid>
-    <Keyword>Win32Proj</Keyword>
-    <RootNamespace>MyApp</RootNamespace>
-  </PropertyGroup>
-  ...
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClInclude Include="myclass.h" />
-  </ItemGroup>
-</Project>
-
 
 **3. Файл фильтров (.vcxproj.filters)**
 Назначение: Используется только средой Visual Studio для организации файлов проекта в виртуальные папки (фильтры) в обозревателе решений. Не влияет на сборку.
@@ -87,34 +64,7 @@ xml
 
 Когда используется: Visual Studio читает этот файл при отображении структуры проекта. Если файл отсутствует, все файлы будут отображаться в корне проекта, но сборка продолжится.
 
-Пример:
 
-
-xml
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup>
-    <Filter Include="Исходные файлы">
-      <UniqueIdentifier>{...}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Заголовочные файлы">
-      <UniqueIdentifier>{...}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Файлы ресурсов">
-      <UniqueIdentifier>{...}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClInclude Include="myclass.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-  </ItemGroup>
-</Project>
 
 
 **4. Файл пользовательских настроек (.vcxproj.user)**
@@ -124,16 +74,6 @@ xml
 
 Когда используется: Visual Studio автоматически создаёт и изменяет этот файл при работе пользователя. При передаче проекта другому разработчику этот файл не обязателен.
 
-Пример:
-
-xml
-<Project ToolsVersion="Current" xmlns="...">
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory>
-    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>--verbose</LocalDebuggerCommandArguments>
-  </PropertyGroup>
-</Project>
 
 
 **5. Исходные файлы C++ (.cpp)**
@@ -143,18 +83,6 @@ xml
 
 Когда используется: Компилятор обрабатывает каждый .cpp файл отдельно, создавая объектный файл. Затем компоновщик объединяет объектные файлы в исполняемый файл.
 
-Пример (main.cpp):
-
-cpp
-#include <iostream>
-#include "myclass.h"
-
-int main() {
-    MyClass obj;
-    obj.printMessage();
-    return 0;
-}
-
 
 
 **6. Заголовочные файлы (.h, .hpp)**
@@ -163,21 +91,6 @@ int main() {
 Содержимое: Объявления (прототипы функций, определения классов, inline-функции, шаблоны). Обычно защищены от повторного включения с помощью #pragma once или include guards.
 
 Когда используется: Препроцессор вставляет содержимое заголовочного файла в .cpp перед компиляцией. Позволяет избежать дублирования кода и обеспечивает модульность.
-
-Пример (myclass.h):
-
-cpp
-#pragma once
-#include <string>
-
-class MyClass {
-public:
-    void printMessage() const;
-private:
-    std::string message = "Hello from MyClass!";
-};
-
-
 
 **7. Предварительно откомпилированные заголовки (pch.h, pch.cpp)**
 Назначение: Ускоряют компиляцию за счёт предварительной компиляции часто используемых заголовочных файлов (обычно стандартных библиотек, Windows.h и т.п.). В Visual Studio по умолчанию для новых проектов создаются файлы pch.h и pch.cpp.
@@ -205,17 +118,6 @@ resource.h — заголовочный файл с идентификатора
 
 Когда используется: Ресурсный компилятор (rc.exe) преобразует .rc в двоичный файл .res, который затем компонуется в исполняемый файл. Позволяет хранить в приложении иконки, версии, локализованные строки.
 
-Пример фрагмента .rc:
-
-text
-IDI_MYAPP ICON "myapp.ico"
-IDD_ABOUTBOX DIALOGEX 0, 0, 200, 100
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION
-CAPTION "About MyApp"
-BEGIN
-    DEFPUSHBUTTON "OK", IDOK, 75, 80, 50, 14
-END
-
 
 **9. Файл манифеста приложения (app.manifest)**
 Назначение: XML-файл, определяющий параметры выполнения приложения: требуемые права администратора, совместимость с версиями Windows, зависимости от библиотек (например, Common Controls 6), DPI-осведомлённость и т.д.
@@ -224,25 +126,6 @@ END
 
 Когда используется: Включается в ресурсы проекта (обычно указывается в .rc) и встраивается в исполняемый файл. Windows использует манифест при запуске программы для применения указанных настроек.
 
-Пример:
-
-
-xml
-<?xml version="1.0" encoding="utf-8"?>
-<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1">
-  <trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">
-    <security>
-      <requestedPrivileges>
-        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
-      </requestedPrivileges>
-    </security>
-  </trustInfo>
-  <dependency>
-    <dependentAssembly>
-      <assemblyIdentity type="win32" name="Microsoft.Windows.Common-Controls" version="6.0.0.0" processorArchitecture="*" publicKeyToken="6595b64144ccf1df" language="*" />
-    </dependentAssembly>
-  </dependency>
-</assembly>
 
         
 10. Файл AssemblyInfo.cpp (для проектов .NET/CLR или Windows)
